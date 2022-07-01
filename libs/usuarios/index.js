@@ -59,6 +59,12 @@ module.exports = class Usuario {
 
     };
 
+    async getUsuarioByToken({token})  {
+
+        return this.usuarioDao.getByToken({token});
+
+    };
+
     comparePasswords(rawPassword, dbPassword)
   {
     return bcrypt.compareSync(rawPassword, dbPassword)
@@ -89,6 +95,29 @@ module.exports = class Usuario {
        }
 
     };
+
+    async UpdateToken({codigo, token}) {
+        const result = await this.usuarioDao.UpdateOneToken({codigo, token});
+
+        return {
+            codigo: codigo,
+            token: token,
+            modified: result.changes
+        }
+
+     };
+
+     async UpdatePassword({codigo, password}) {
+        const result = await this.usuarioDao.updateOnePasword({codigo, password: bcrypt.hashSync(password),});
+
+        return {
+            codigo: codigo,
+            password: bcrypt.hashSync(password),
+            modified: result.changes
+        }
+
+     };
+
 
     async deleteUsuario({codigo}) {
         const userToDelete = await this.usuarioDao.getById({codigo});

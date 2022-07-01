@@ -16,6 +16,8 @@ const jwtAuthorizer = async (req, res, next)=>{
   }
 }
 
+
+
 module.exports = {
   jwtAuthorizer
 }

@@ -34,6 +34,11 @@ module.exports = class CategoryDao extends DaoObject{
         return this.findOne({email});
       }
 
+      getByToken({token}) {
+
+        return this.findOne({token});
+      }
+
 
 
     insertOne({nombreCompleto, email, estado, avatar, password})
@@ -51,6 +56,27 @@ module.exports = class CategoryDao extends DaoObject{
                 avatar,
                 password,
                 updated: new Date().toISOString()
+            }
+        };
+        return super.updateOne(codigo, updateCommand);
+    }
+
+    UpdateOneToken({codigo, token})
+    {
+        const updateCommand = {
+            '$set': {
+              token,
+              updatedToken: new Date().toISOString()
+            }
+        };
+        return super.updateOne(codigo, updateCommand);
+    }
+
+    updateOnePasword({codigo, password})
+    {
+        const updateCommand = {
+            '$set': {
+                password
             }
         };
         return super.updateOne(codigo, updateCommand);
