@@ -15,6 +15,13 @@ router.post('/recovery', async (req,res) => {
 
     try {
         const {email} = req.body;
+
+        if(!email || /^\s*$/.test(email))
+        {
+            return res.status(400).json({
+                error: 'Se espera valor de Email'
+            });
+        }
         const userData = await user.getUsuarioByEmail({email});
         console.log(userData);
 
@@ -53,6 +60,20 @@ router.put('/reset', async (req,res) => {
 
     try {
         const {token, password} = req.body;
+
+        if(!password || /^\s*$/.test(password))
+        {
+            return res.status(400).json({
+                error: 'Se espera valor de password'
+            });
+        }
+
+        if(!token || /^\s*$/.test(token))
+        {
+            return res.status(400).json({
+                error: 'Se espera valor de token'
+            });
+        }
         const userData = await user.getUsuarioByToken({token});
         const verify = await jwtVerifyRecovery(token);
 
